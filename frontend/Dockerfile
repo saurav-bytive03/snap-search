@@ -11,4 +11,4 @@ RUN npm run build
 
 # Serve built frontend
 EXPOSE 4173
-CMD ["npm", "run", "start"]
+CMD ["npm", "run", "preview"]
