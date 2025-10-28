@@ -6,25 +6,24 @@ WORKDIR /app
 
 # Copy package files
 COPY package*.json ./
-COPY yarn.lock ./
 
 # Copy the .env file to the working directory
 COPY .env .env
 
 # Install dependencies
-RUN yarn install --frozen-lockfile
+RUN npm install --frozen-lockfile
 
 # Copy source code
 COPY . .
 
 # Build the application
-RUN yarn build
+RUN npm run build
 
 # Production stage
 FROM nginx:alpine
 
 # Copy built app from builder stage
-COPY --from=builder /app/dist /usr/share/nginx/html
+COPY --from=builder /app/dist ./dist
 
 # Copy nginx configuration (optional - nginx default works for most SPAs)
 # COPY nginx.conf /etc/nginx/conf.d/default.conf
