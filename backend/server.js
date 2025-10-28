@@ -25,6 +25,11 @@ app.use(cors());
 app.use(express.json());
 app.use('/images', express.static(path.join(__dirname, 'images')));
 
+// Serve frontend static files in production
+if (process.env.NODE_ENV === 'production') {
+    app.use(express.static(path.join(__dirname, 'public')));
+}
+
 // Multer config for multiple file uploads
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -417,6 +422,13 @@ app.delete('/image/:id', async (req, res) => {
 app.get('/health', (req, res) => {
     res.json({ status: 'OK', timestamp: new Date().toISOString() });
 });
+
+// Serve frontend for all other routes in production (SPA fallback)
+if (process.env.NODE_ENV === 'production') {
+    app.get('*', (req, res) => {
+        res.sendFile(path.join(__dirname, 'public', 'index.html'));
+    });
+}
 
 // Graceful shutdown
 async function shutdown() {

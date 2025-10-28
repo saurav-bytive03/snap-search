@@ -310,6 +310,39 @@ The built files will be in the `dist` directory.
 ### Backend
 The backend doesn't require a build step. Just ensure all environment variables are set correctly.
 
+## Docker Deployment
+
+### Quick Start with Docker Compose
+
+```bash
+# Build and run
+docker-compose up --build
+
+# Access at http://localhost:8000
+```
+
+### Deploy to Easypanel
+
+See [DEPLOYMENT.md](./DEPLOYMENT.md) for detailed instructions.
+
+**Quick Summary:**
+1. Push code to GitHub
+2. Create MongoDB service in Easypanel
+3. Create new service from GitHub repository
+4. Set environment variables:
+   - `NODE_ENV=production`
+   - `PORT=8000`
+   - `MONGODB_URI=mongodb://mongodb:27017/ocr-gallery`
+5. Deploy with Dockerfile
+6. Configure domain and SSL
+
+The Dockerfile includes:
+- Multi-stage build for optimized image size
+- Tesseract OCR pre-installed
+- Frontend built and served by backend
+- Health checks included
+- Production-ready configuration
+
 ## Troubleshooting
 
 ### MongoDB Connection Issues
