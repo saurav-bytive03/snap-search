@@ -25,9 +25,6 @@ FROM nginx:alpine
 # Copy built app from builder stage
 COPY --from=builder /app/dist ./dist
 
-# Copy nginx configuration (optional - nginx default works for most SPAs)
-# COPY nginx.conf /etc/nginx/conf.d/default.conf
-# Expose port
 EXPOSE 5173
 
 # Start nginx
