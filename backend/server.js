@@ -107,22 +107,7 @@ async function performOCR(imagePath) {
 
 // Root
 app.get('/', (req, res) => {
-    res.send(`
-        <h1>OCR Text Search API</h1>
-        <p><strong>GET:</strong> <code>/ocr?image=test.png&q=Nutrition</code></p>
-        <p><strong>POST:</strong> <code>/image</code> (multipart/form-data, files in 'images')</p>
-        <p><strong>GET:</strong> <code>/image?search=Nutrition</code></p>
-        <img src="/images/test.png" alt="test" width="500"/>
-        <pre style="background:#f4f4f4;padding:10px;margin-top:20px;">
-Example Response:
-{
-  "image": "test.png",
-  "text": "AI-Powered Nutrition:\\nHow Smart Apps Are...",
-  "found": true,
-  "match": "nutrition",
-  "confidence": 94.2
-}</pre>
-    `);
+    res.send(`Hello World`);
 });
 
 // Existing OCR + Search Route (for single static image)
