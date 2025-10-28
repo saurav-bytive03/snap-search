@@ -1,22 +1,17 @@
-# Base image
-FROM node:18 AS base
+FROM node:18
 WORKDIR /app
 
-# ===== Backend Stage =====
-FROM base AS backend
-WORKDIR /app/backend
-COPY backend/package*.json ./
-RUN npm install
-COPY backend .
-EXPOSE 8000
-CMD ["npm", "run", "dev"]
+# Copy and install backend
+COPY backend ./backend
+RUN cd backend && npm install
 
-# ===== Frontend Stage =====
-FROM base AS frontend
-WORKDIR /app/frontend
-COPY frontend/package*.json ./
-RUN npm install
-COPY frontend .
-RUN npm run build
-EXPOSE 4173
-CMD ["npm", "run", "start"]
+# Copy and install frontend
+COPY frontend ./frontend
+RUN cd frontend && npm install && npm run build
+
+# Install concurrently globally
+RUN npm install -g concurrently
+
+EXPOSE 8000 4173
+
+CMD concurrently "cd backend && npm run dev" "cd frontend && npm run start"
